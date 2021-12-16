@@ -14,11 +14,12 @@ body {
     padding-bottom: 10px;
 }
 
-.post>div {
-    padding: 5px;
-}
 .comment {
     border: 2px solid blueviolet;
     border-radius: 10px;
     margin: 20px;
+    padding: 5px;
+}
+.container {
+    display: none;
 }

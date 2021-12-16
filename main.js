@@ -14,30 +14,53 @@ fetch('https://jsonplaceholder.typicode.com/posts')
             body.innerText = `body : ${post.body}`;
             let button = document.createElement('button');
             button.innerText = 'comments';
-            button.addEventListener('click', function () {
-                fetch('https://jsonplaceholder.typicode.com/comments')
-                    .then(value => value.json())
-                    .then(comments => {
-                        for (const comment of comments) {
-                            if (comment.postId === post.id) {
-                                let commentDiv = document.createElement('div');
-                                commentDiv.classList.add('comment')
-                                let nameComment = document.createElement('div');
-                                nameComment.innerText = `name : ${comment.name}`;
-                                let emailComment = document.createElement('div');
-                                emailComment.innerText = `email : ${comment.email}`;
-                                let bodyComment = document.createElement('div');
-                                bodyComment.innerText = `body : ${comment.body}`;
+            let commentContainer = document.createElement('div');
+            commentContainer.classList.add(`container`);
+            fetch('https://jsonplaceholder.typicode.com/comments')
+                .then(value => value.json())
+                .then(comments => {
+                    for (const comment of comments) {
+                        if (comment.postId === post.id) {
+                            let commentDiv = document.createElement('div');
+                            commentDiv.classList.add('comment')
+                            let nameComment = document.createElement('div');
+                            nameComment.innerText = `name : ${comment.name}`;
+                            let emailComment = document.createElement('div');
+                            emailComment.innerText = `email : ${comment.email}`;
+                            let bodyComment = document.createElement('div');
+                            bodyComment.innerText = `body : ${comment.body}`;
 
-                                commentDiv.append(nameComment, emailComment, bodyComment);
-                                postDiv.append(commentDiv);
-                                button.disabled = true;
-                            }
+                            commentDiv.append(nameComment, emailComment, bodyComment);
+                            commentContainer.append(commentDiv);
                         }
-                    });
+                    }
+                })
+
+            button.addEventListener('click', function () {
+                commentContainer.classList.toggle('container');
+                // fetch('https://jsonplaceholder.typicode.com/comments')
+                //     .then(value => value.json())
+                //     .then(comments => {
+                //         for (const comment of comments) {
+                //             if (comment.postId === post.id) {
+                //                 let commentDiv = document.createElement('div');
+                //                 commentDiv.classList.add('comment')
+                //                 let nameComment = document.createElement('div');
+                //                 nameComment.innerText = `name : ${comment.name}`;
+                //                 let emailComment = document.createElement('div');
+                //                 emailComment.innerText = `email : ${comment.email}`;
+                //                 let bodyComment = document.createElement('div');
+                //                 bodyComment.innerText = `body : ${comment.body}`;
+                //
+                //                 commentDiv.append(nameComment, emailComment, bodyComment);
+                //                 postDiv.append(commentDiv);
+                //                 button.disabled = true;
+                //             }
+                //         }
+                //     });
             });
 
-            postDiv.append(title, body, button);
+            postDiv.append(title, body, button, commentContainer);
             document.body.append(postDiv);
         }
     });
